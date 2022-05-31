@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Linux 下 微擎 的安装使用 | Rme</title>
+<meta name="description" content="Root down，grow upward.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://Ryyyc.github.io/favicon.ico?v=1654011978957">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Ryyyc.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://Ryyyc.github.io">Rme</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>Linux 下 微擎 的安装使用</h1>
+            <p class="article-meta">
+              2020-08-08
+              
+                <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge warning">
+                  Linux
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <h1 id="linux-下-微擎-的安装使用">Linux 下 微擎 的安装使用</h1>
+<br>
+<p><strong>微擎</strong> 是一款基于WEB2.0(PHP+Mysql)技术架构，免费开源的公众平台管理系统，提供公众号、微信小程序、支付宝小程序、百度熊掌号、移动端APP、PC网站等多种功能，一站式满足用户招商加盟、分销代理、营销推广、餐饮酒旅、讯息获取等各个环节的需求。</p>
+<br>
+<!--more-->
+<br>
+<p>服务器环境要求 <strong>IIS/Apache/Nginx + PHP&gt;=5.6 + MySQL&gt;=5</strong><br>
+<br><br>
+新版本的微擎不支持离线安装，可以从 <a href="https://www.w7.cc/">官网</a> 获得在线安装文件 <a href="https://s.w7.cc/store-static-install.html">下载链接</a></p>
+<p><br><br></p>
+<h2 id="环境搭建">环境搭建</h2>
+<br>
+<h4 id="ubuntu">Ubuntu</h4>
+<pre><code class="language-bash"># 更新一波软件
+sudo apt-get upgrade
+
+# 安装Apache2
+apt install apache2
+
+# 安装 PHP 及所需拓展
+apt install php7.4 php7.4-mbstring php7.4-xml php7.4-mysql php7.4-sqlite3 php7.4-gd
+
+# 安装 MySQL
+apt install mysql-server-8.0
+</code></pre>
+<p><br><br></p>
+<h4 id="centos-77">CentOS 7.7</h4>
+<p>CentOS7下安装PHP默认版本是 5.4，MediaWiki 1.34 要求 PHP 最低版本为 7.2.9，所以需要换源升级。</p>
+<pre><code class="language-bash"># 更新源
+rpm -Uvh https://mirror.webtatic.com/yum/el7/epel-release.rpm
+rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+
+# 移除系统自带的php-common
+yum remove php-common -y
+
+# 安装依赖包
+yum install -y php72w php72w-opcache php72w-xml php72w-mcrypt php72w-gd php72w-devel php72w-mysql php72w-intl php72w-mbstring
+
+# 查看 PHP 版本
+php -v
+
+# 安装Apache服务及其扩展包
+yum -y install httpd httpd-manual mod_ssl mod_perl mod_auth_mysql
+
+# 启动 Apache 服务，并设置开机自启
+systemctl start httpd.service
+systemctl enable httpd.service
+
+# 安装 MySQL
+wget http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm
+yum -y install mysql57-community-release-el7-10.noarch.rpm
+yum -y install mysql-community-server
+
+# 启动 MySQL
+systemctl start mysqld.service
+</code></pre>
+<p><br><br><br></p>
+<h2 id="安装微擎">安装微擎</h2>
+<pre><code class="language-bash"># 下载微擎在线安装文件
+wget https://cdn.w7.cc/download/WeEngine-Laster-Online.zip
+
+# 安装 unzip （Ubuntu 系统使用第一条 apt-get， CentOS 系统使用第二条 yum，如果已安装请忽略此条命令）
+sudo apt-get install unzip
+yum install zip unzip
+
+# 解压获得安装文件 install.php
+unzip WeEngine-Laster-Online.zip
+
+# 移出 html 旧目录（如果有的话）
+mv /var/www/html /var/www/old
+
+# 更换 html 目录
+mv install.php /var/www/html
+</code></pre>
+<br>
+<p>在 MySQL 中创建一个用户供微擎使用</p>
+<pre><code class="language-mysql"># 创建数据库 myw7
+create database myw7;
+# 创建一个用户，用户名 w7，密码 Password@w7
+create user 'w7'@'localhost' identified by 'Password@w7';
+# 把数据库 myw7 权限授予 w7
+grant all privileges on myw7.* to 'w7'@'localhost';
+# 刷新权限的更改
+flush privileges;
+</code></pre>
+<br>
+<br>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200808153151406.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200808153204777.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<p>访问 <strong>&lt;你的公网IP&gt;/install.php</strong></p>
+<br>
+<p>会自动跳转到安装页面，没有微擎账号需要先注册账号</p>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200808153231518.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<p>登陆后配置数据库参数，主机写 localhost 就行</p>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200808153247817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<p>等待安装完毕之后设置系统账号并登陆即可</p>
+<p><br><br></p>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://Ryyyc.github.io/post/CSDN-add-contents/">
+                <h3 class="post-title">
+                  CSDN添加文章目录
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+          
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
+
+          
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://Ryyyc.github.io/images/avatar.png?v=1654011978957" class="no-responsive avatar">
+    <div class="text-muted">Root down，grow upward.</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/pgadmin-load-fail/">pgAdmin启动时浏览器页面一直转圈圈 无法正常打开页面</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/">通过 SSH 连接到 VMware NAT 模式下的 Ubuntu 虚拟机环境</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/">GitHub + jsDelivr + PicGo 搭建个人图床</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">修改QQ截图自动命名规则</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-homepage-readme/">Github 个人首页档案资料卡 README 自述文件</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-image-load-fail/">解决Github无法加载或不显示图片问题</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/">windows10 下 用图片手把手教你 卸载 cygwin</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/">python: Failed calling sys.__interactivehook__ (Windows)</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Tmp-Path/">Windows 下 修改temp目录路径</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/">Windows下 更改 pip默认缓存目录</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://Ryyyc.github.io/tag/UYAaNgx99/" class="badge secondary">
+          Windows
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/bYsFXBbd3/" class="badge success">
+          Ubuntu
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/q5U9ddBvN/" class="badge success">
+          GitHub
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/IlH1S4cd3/" class="badge ">
+          Python
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/T5_OZKfBOv/" class="badge ">
+          ELK
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge ">
+          Linux
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/UU6G47RMx/" class="badge secondary">
+          Anaconda3
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/eCf4SJbE3y/" class="badge warning">
+          OpenCV
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/5R72tT28g/" class="badge success">
+          CSDN
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/NjCIr2uZ-/" class="badge secondary">
+          Git
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2020-2022  <a href="https://github.com/Ryyyc" target="_blank">Ryyyc</a> <a> </a> <a href="https://beian.miit.gov.cn">桂ICP备2022003830号</a>
+    </div> | <a class="rss" href="https://Ryyyc.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c32058622fcbec922dcf',
+        clientSecret: 'ff7ece0b2576488eab76c7cf43717b1aacb0bb8f',
+        repo: 'Ryyyc.github.io',
+        owner: 'Ryyyc',
+        admin: ['Ryyyc'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

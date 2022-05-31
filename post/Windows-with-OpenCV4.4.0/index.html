@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Windows 下 VS2017(+Clion) 配置 OpenCV-4.4.0 | Rme</title>
+<meta name="description" content="Root down，grow upward.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://Ryyyc.github.io/favicon.ico?v=1654011978957">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Ryyyc.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://Ryyyc.github.io">Rme</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>Windows 下 VS2017(+Clion) 配置 OpenCV-4.4.0</h1>
+            <p class="article-meta">
+              2020-08-07
+              
+                <a href="https://Ryyyc.github.io/tag/UYAaNgx99/" class="badge ">
+                  Windows
+                </a>
+              
+                <a href="https://Ryyyc.github.io/tag/eCf4SJbE3y/" class="badge warning">
+                  OpenCV
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <h1 id="vs2017clion-配置-opencv-440">VS2017(+Clion) 配置 OpenCV-4.4.0</h1>
+<br>
+<p>OpenCV的全称是Open Source Computer Vision Library，是一个跨平台的计算机视觉库，可以运行在Linux、Windows、Android和Mac OS操作系统上。<br>
+OpenCV轻量级而且高效——由一系列 C 函数和少量 C++ 类构成，同时提供了Python、Ruby、MATLAB等语言的接口，实现了图像处理和计算机视觉方面的很多通用算法。该程序库也可以使用英特尔公司的IPP进行加速处理。</p>
+<br>
+<p>此教程帮助大家在 windows下 快速配置 OpenCV-4.4.0</p>
+<!--more-->
+<br>
+<h3 id="opencv-440">OpenCV-4.4.0</h3>
+<br>
+<h5 id="下载">下载</h5>
+<p>从 <a href="https://opencv.org/releases/">官网</a> 下载已经编译好的文件</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200807144036752.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>
+<h5 id="解压">解压</h5>
+<p>解压到自定义路径</p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200807144105398.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>得到一个opencv文件夹</p>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200807144128672.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>D:\Environment\opencv\build\x64目录下有两个文件夹，vc14、vc15</p>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200807144151273.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>如果 Visual Studio 版本是2017或2019，下面的环境变量以及 Visual Studio 的配置中，选择 vc15， 如果是 2015，选择vc14。<br>
+<br><br>
+下面我使用 VS2017 演示。</p>
+ <br>
+ <br>
+<h5 id="环境变量">环境变量</h5>
+<p>新增path环境变量 <strong>D:\Environment\opencv\build\x64\vc15\lib</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200807144218819.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br><br>
+<br></p>
+<h3 id="配置">配置</h3>
+<br>
+<h5 id="visual-studio">Visual Studio</h5>
+<br>
+<p><strong>前言</strong></p>
+<p>如果已安装 Visual Studio 或者 Visual Studio 生成工具，并且想要在Clion上运行opencv程序的话，可以跳过这一步，直接去配置Clion。</p>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20200807144258423.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="" loading="lazy"></figure>
+<br>
+<br>
+<p><strong>安装</strong></p>
+<p><a href="https://visualstudio.microsoft.com/zh-hans/">官网</a></p>
+<br>
+<p><strong>新建工程</strong></p>
+<p>略</p>
+<br>
+<p><strong>配置</strong></p>
+<p>右键项目名，选择<strong>属性</strong></p>
+<br>
+<p>平台选择<strong>X64</strong></p>
+<br>
+<p>单击左侧<strong>配置属性 --&gt; VC++ 目录</strong>，设置右侧包含目录和库目录</p>
+<p><strong>包含目录</strong>添加两个变量（根据自己的路径添加）</p>
+<p><strong>D:\Environment\opencv\build\include\opencv2</strong></p>
+<p><strong>D:\Environment\opencv\build\include</strong></p>
+<p><strong>库目录</strong>添加一个变量</p>
+<p><strong>D:\Environment\opencv\build\x64\vc15\lib</strong></p>
+<br>
+<p>单击左侧**配置属性 --&gt; 链接器 --&gt; 输入 **，设置右侧附加依赖项</p>
+<p><strong>附加依赖项</strong>添加一个变量</p>
+<p><strong>opencv_world440d.lib</strong></p>
+<br>
+<p>如果下载的是其他版本的opencv，请使用对应变量，在 D:\Environment\opencv\build\x64\vc15\bin 路径中可以找到</p>
+<p>例如，OpenCV4.1.0 对应的是 opencv_world410d.lib</p>
+<br>
+<br>
+<h5 id="clion">Clion</h5>
+<p>打开 Clion 项目，File --&gt; settings --&gt; Build, Execution, Deployment --&gt; Toolchains</p>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200807144346105.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>Environment，Cmake，Debugger 都OK之后，编辑 <strong>CMakeLists.txt</strong><br>
+<br><br>
+（opencv 为演示项目名，请自行替换）</p>
+<pre><code class="language-cmake">cmake_minimum_required(VERSION 3.16)
+# 项目名
+project(opencv)
+
+# 搜索OpenCV目录
+find_package(OpenCV REQUIRED)
+
+# 信息输出(非必须)
+message(STATUS &quot;OpenCV library status:&quot;)
+message(STATUS &quot;    config: ${OpenCV_DIR}&quot;)
+message(STATUS &quot;    version: ${OpenCV_VERSION}&quot;)
+message(STATUS &quot;    libraries: ${OpenCV_LIBS}&quot;)
+message(STATUS &quot;    include path: ${OpenCV_INCLUDE_DIRS}&quot;)
+
+add_executable(opencv main.cpp)
+
+# 链接OpenCV库文件
+target_link_libraries(opencv ${OpenCV_LIBS})
+</code></pre>
+<br>
+<br>
+<h3 id="测试">测试</h3>
+<br>
+<h5 id="测试样例一">测试样例一</h5>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+#include &quot;opencv2/opencv.hpp&quot;
+
+int main()
+{
+    std::cout &lt;&lt; &quot;OpenCV config sample.&quot; &lt;&lt; std::endl;
+    std::cout&lt;&lt; cv::getBuildInformation() &lt;&lt;std::endl;
+    return 0;
+}
+</code></pre>
+<br>
+<h5 id="测试样例二">测试样例二</h5>
+<p>此样例来自官方文件</p>
+<pre><code class="language-c++">#include &quot;opencv2/core.hpp&quot;
+#include &quot;opencv2/imgproc.hpp&quot;
+#include &quot;opencv2/highgui.hpp&quot;
+#include &quot;opencv2/videoio.hpp&quot;
+#include &lt;iostream&gt;
+
+using namespace cv;
+using namespace std;
+
+void drawText(Mat &amp; image);
+
+int main()
+{
+    cout &lt;&lt; &quot;Built with OpenCV &quot; &lt;&lt; CV_VERSION &lt;&lt; endl;
+    Mat image;
+    VideoCapture capture;
+    capture.open(0);
+    if(capture.isOpened())
+    {
+        cout &lt;&lt; &quot;Capture is opened&quot; &lt;&lt; endl;
+        for(;;)
+        {
+            capture &gt;&gt; image;
+            if(image.empty())
+                break;
+            drawText(image);
+            imshow(&quot;Sample&quot;, image);
+            if(waitKey(10) &gt;= 0)
+                break;
+        }
+    }
+    else
+    {
+        cout &lt;&lt; &quot;No capture&quot; &lt;&lt; endl;
+        image = Mat::zeros(480, 640, CV_8UC1);
+        drawText(image);
+        imshow(&quot;Sample&quot;, image);
+        waitKey(0);
+    }
+    return 0;
+}
+
+void drawText(Mat &amp; image)
+{
+    putText(image, &quot;Hello OpenCV&quot;,
+            Point(20, 50),
+            FONT_HERSHEY_COMPLEX, 1, // font face and scale
+            Scalar(255, 255, 255), // white
+            1, LINE_AA); // line thickness and type
+}
+</code></pre>
+<br>
+<br>
+<p>如果出现一下问题</p>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200807144428453.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/2020080714444588.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>则把 提示中的路径 添加到 <strong>Run/Debug Configurations --&gt; Working directory</strong> 中</p>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/20200807144502441.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://Ryyyc.github.io/post/Linux-with-MediaWiki/">
+                <h3 class="post-title">
+                  Linux 下 MediaWiki 的安装使用
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+          
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
+
+          
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://Ryyyc.github.io/images/avatar.png?v=1654011978957" class="no-responsive avatar">
+    <div class="text-muted">Root down，grow upward.</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/pgadmin-load-fail/">pgAdmin启动时浏览器页面一直转圈圈 无法正常打开页面</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/">通过 SSH 连接到 VMware NAT 模式下的 Ubuntu 虚拟机环境</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/">GitHub + jsDelivr + PicGo 搭建个人图床</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">修改QQ截图自动命名规则</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-homepage-readme/">Github 个人首页档案资料卡 README 自述文件</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-image-load-fail/">解决Github无法加载或不显示图片问题</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/">windows10 下 用图片手把手教你 卸载 cygwin</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/">python: Failed calling sys.__interactivehook__ (Windows)</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Tmp-Path/">Windows 下 修改temp目录路径</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/">Windows下 更改 pip默认缓存目录</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://Ryyyc.github.io/tag/UYAaNgx99/" class="badge ">
+          Windows
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/bYsFXBbd3/" class="badge warning">
+          Ubuntu
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/q5U9ddBvN/" class="badge secondary">
+          GitHub
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/IlH1S4cd3/" class="badge success">
+          Python
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/T5_OZKfBOv/" class="badge ">
+          ELK
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge success">
+          Linux
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/UU6G47RMx/" class="badge secondary">
+          Anaconda3
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/eCf4SJbE3y/" class="badge secondary">
+          OpenCV
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/5R72tT28g/" class="badge secondary">
+          CSDN
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/NjCIr2uZ-/" class="badge warning">
+          Git
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2020-2022  <a href="https://github.com/Ryyyc" target="_blank">Ryyyc</a> <a> </a> <a href="https://beian.miit.gov.cn">桂ICP备2022003830号</a>
+    </div> | <a class="rss" href="https://Ryyyc.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c32058622fcbec922dcf',
+        clientSecret: 'ff7ece0b2576488eab76c7cf43717b1aacb0bb8f',
+        repo: 'Ryyyc.github.io',
+        owner: 'Ryyyc',
+        admin: ['Ryyyc'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

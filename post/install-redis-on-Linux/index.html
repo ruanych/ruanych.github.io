@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Linux 下 Redis 的安装使用 | Rme</title>
+<meta name="description" content="Root down，grow upward.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://Ryyyc.github.io/favicon.ico?v=1654011978957">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Ryyyc.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://Ryyyc.github.io">Rme</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>Linux 下 Redis 的安装使用</h1>
+            <p class="article-meta">
+              2020-06-13
+              
+                <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge warning">
+                  Linux
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <h1 id="redis-的安装使用">Redis 的安装使用</h1>
+<br>
+<p><strong>Redis</strong>（Remote Dictionary Server )是一个使用ANSI C编写的开源、支持网络、基于内存、可选持久性的<strong>键值对存储数据库</strong>，提供了多种语言的API。</p>
+<br>
+<p>下面是 <strong>Ubuntu 18.04</strong> 系统上安装Redis简易版教程</p>
+<br>
+<br>
+<!-- more -->
+<h3 id="第一步下载安装包"><strong>第一步：下载安装包</strong></h3>
+<ol>
+<li>
+<p>获取下载地址</p>
+<p>Redis官方网站：<a href="https://redis.io/">https://redis.io/</a></p>
+</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200807122421103.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>  
+<ol start="2">
+<li>选择安装路径，我选择的是 /root/tools/software/</li>
+</ol>
+<pre><code class="language-bash">cd tools/software/
+</code></pre>
+<br>  
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200807123724794.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>  
+<ol start="3">
+<li>下载Redis安装包（6.0.5为版本号，可更换成最新的版本号，若连接更换，请移步官网）</li>
+</ol>
+<pre><code class="language-bash">wget  http://download.redis.io/releases/redis-6.0.5.tar.gz
+</code></pre>
+<br>  
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200807122659389.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br> 
+<h3 id="第二步安装"><strong>第二步：安装</strong></h3>
+<ol>
+<li>解压（请使用对应的文件名）</li>
+</ol>
+<pre><code class="language-bash">tar  -xvf  redis-6.0.5.tar.gz 
+</code></pre>
+<br>  
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200807122720468.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>  
+<p>图文过长，只截取前面一部分</p>
+<br>  
+<br>  
+<ol start="2">
+<li>创建软链接（为了方便，非必须，如果没有创建，接下来的涉及到redis路径请用redis-6.0.5）</li>
+</ol>
+<p>​	    ln -s 原始目录名 快速访问目录名</p>
+<pre><code class="language-bash">ln -s redis-6.0.5 redis
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/20200807122738337.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>  
+<ol start="3">
+<li>进入redis目录，对解压的Redis文件进行编译</li>
+</ol>
+<pre><code class="language-bash">cd redis
+</code></pre>
+<pre><code class="language-bash">make
+</code></pre>
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200807122759946.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br> 
+<p>如果没有配置好编译环境，则使用以下命令配置：</p>
+<pre><code class="language-bash">yum install gcc-c++
+</code></pre>
+<br>  
+<ol start="4">
+<li>进入src文件夹进行Redis安装</li>
+</ol>
+<pre><code class="language-bash">cd  src
+</code></pre>
+<pre><code class="language-bash">make  install
+</code></pre>
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/20200807122818290.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>
+<h3 id="第三步部署"><strong>第三步：部署</strong></h3>
+<ol>
+<li>回到redis目录下，创建data、conf文件夹用于保存数据和配置文件</li>
+</ol>
+<pre><code class="language-bash">cd ..
+</code></pre>
+<pre><code class="language-bash">mkdir data
+</code></pre>
+<pre><code class="language-bash">mkdir conf
+</code></pre>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/20200807122834736.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>  
+<ol start="2">
+<li>进入conf目录，编写配置文件  redis-端口号.conf</li>
+</ol>
+<p>例：redis-6379.conf  （除了带注释的行，其他均为默认设置，见redis目录下的redis.conf文件）</p>
+<pre><code class="language-bash">#  绑定的ip，请根据需求自行更换
+bind 127.0.0.1
+protected-mode yes
+#  端口设置
+port 6379
+tcp-backlog 511
+timeout 0
+tcp-keepalive 300
+#  以守护进程的方式启动，redis以服务的形式存在，日志不再打印到命令窗口中
+daemonize yes
+supervised no
+pidfile /var/run/redis_6379.pid
+loglevel notice
+#  日志文件名
+logfile &quot;6379.log&quot; 
+databases 16
+always-show-logo yes
+save 900 1
+save 300 10
+save 60 10000
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+rdb-del-sync-files no 
+#  当前服务文件保存位置，包含日志文件、持久化文件等
+dir ../data   
+replica-serve-stale-data yes
+replica-read-only yes
+repl-diskless-sync no
+repl-diskless-sync-delay 5
+repl-diskless-load disabled
+repl-disable-tcp-nodelay no
+replica-priority 100
+acllog-max-len 128
+lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+replica-lazy-flush no
+lazyfree-lazy-user-del no
+appendonly no
+appendfilename &quot;appendonly.aof&quot;
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+aof-load-truncated yes
+aof-use-rdb-preamble yes
+lua-time-limit 5000
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+latency-monitor-threshold 0
+notify-keyspace-events &quot;&quot;
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-size -2
+list-compress-depth 0
+set-max-intset-entries 512
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+hll-sparse-max-bytes 3000
+stream-node-max-bytes 4096
+stream-node-max-entries 100
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit replica 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+dynamic-hz yes
+aof-rewrite-incremental-fsync yes
+rdb-save-incremental-fsync yes
+jemalloc-bg-thread yes
+# 内存到达上限之后的处理策略
+maxmemory-policy noeviction 
+# 1. volatile-lru：对设置了过期时间的key执行LRU逐出策略（默认值）
+# 2. allkeys-lru ： 对所有key使用LRU逐出策略
+# 3. volatile-random：随机删除即将过期key（LFU）
+# 4. allkeys-random：随机删除
+# 5. volatile-ttl ： 删除即将过期的
+# 6. noeviction ： 永不过期，返回错误
+</code></pre>
+<br>
+<br>  
+<h3 id="第四步测试"><strong>第四步：测试</strong></h3>
+<ol>
+<li>指定配置文件开启redis服务</li>
+</ol>
+<pre><code class="language-bash">redis-server redis-6379.conf 
+</code></pre>
+<br>  
+<ol start="2">
+<li>连接指定服务器（请使用对应的IP和端口号）</li>
+</ol>
+<pre><code class="language-bash">redis-cli -h 127.0.0.1 –port 6379
+</code></pre>
+<br>  
+<ol start="3">
+<li>set、get测试</li>
+</ol>
+<pre><code class="language-bash">set name redis
+</code></pre>
+<pre><code class="language-bash">get name
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/20200807122858755.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>
+<br>
+<h3 id="ps"><strong>PS：</strong></h3>
+<h4 id="linux命令"><strong>Linux命令：</strong></h4>
+<ol>
+<li>查看当前redis服务进程：</li>
+</ol>
+<pre><code class="language-bash">ps -ef | grep redis
+</code></pre>
+<br>  
+<ol start="2">
+<li>去除空行和注释行复制 redis.conf （在redis目录下复制到conf目录）：</li>
+</ol>
+<pre><code class="language-bash">grep -Ev &quot;^$|#&quot; redis.conf &gt;  ./conf/redis-6379.conf
+</code></pre>
+<br>  
+<ol start="3">
+<li>关闭指定redis进程</li>
+</ol>
+<pre><code class="language-bash">kill  PID
+</code></pre>
+<figure data-type="image" tabindex="10"><img src="https://img-blog.csdnimg.cn/20200807122914621.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>  
+<h4 id="reids命令"><strong>Reids命令：</strong></h4>
+<ol>
+<li>默认方式启动redis服务</li>
+</ol>
+<pre><code class="language-bash">redis-server
+</code></pre>
+<p>​	默认端口号 6379，下面为指定端口号启动</p>
+<pre><code class="language-bash">redis-server --port 6379
+</code></pre>
+<figure data-type="image" tabindex="11"><img src="https://img-blog.csdnimg.cn/20200807122926791.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p>使用 Ctrl + C 快捷键可结束服务</p>
+<br>  
+<ol start="2">
+<li>redis客户端中结束服务并退出</li>
+</ol>
+<pre><code class="language-bash">shutdown
+</code></pre>
+<pre><code class="language-bash">exit
+</code></pre>
+<figure data-type="image" tabindex="12"><img src="https://img-blog.csdnimg.cn/20200807122947460.png#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://Ryyyc.github.io/post/interesting-note/">
+                <h3 class="post-title">
+                  有趣的网页注释，保护我方源码
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+          
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
+
+          
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://Ryyyc.github.io/images/avatar.png?v=1654011978957" class="no-responsive avatar">
+    <div class="text-muted">Root down，grow upward.</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/pgadmin-load-fail/">pgAdmin启动时浏览器页面一直转圈圈 无法正常打开页面</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/">通过 SSH 连接到 VMware NAT 模式下的 Ubuntu 虚拟机环境</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/">GitHub + jsDelivr + PicGo 搭建个人图床</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">修改QQ截图自动命名规则</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-homepage-readme/">Github 个人首页档案资料卡 README 自述文件</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-image-load-fail/">解决Github无法加载或不显示图片问题</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/">windows10 下 用图片手把手教你 卸载 cygwin</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/">python: Failed calling sys.__interactivehook__ (Windows)</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Tmp-Path/">Windows 下 修改temp目录路径</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/">Windows下 更改 pip默认缓存目录</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://Ryyyc.github.io/tag/UYAaNgx99/" class="badge warning">
+          Windows
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/bYsFXBbd3/" class="badge success">
+          Ubuntu
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/q5U9ddBvN/" class="badge success">
+          GitHub
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/IlH1S4cd3/" class="badge warning">
+          Python
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/T5_OZKfBOv/" class="badge success">
+          ELK
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge warning">
+          Linux
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/UU6G47RMx/" class="badge warning">
+          Anaconda3
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/eCf4SJbE3y/" class="badge secondary">
+          OpenCV
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/5R72tT28g/" class="badge warning">
+          CSDN
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/NjCIr2uZ-/" class="badge warning">
+          Git
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2020-2022  <a href="https://github.com/Ryyyc" target="_blank">Ryyyc</a> <a> </a> <a href="https://beian.miit.gov.cn">桂ICP备2022003830号</a>
+    </div> | <a class="rss" href="https://Ryyyc.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c32058622fcbec922dcf',
+        clientSecret: 'ff7ece0b2576488eab76c7cf43717b1aacb0bb8f',
+        repo: 'Ryyyc.github.io',
+        owner: 'Ryyyc',
+        admin: ['Ryyyc'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

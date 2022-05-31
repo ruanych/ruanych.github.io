@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://Ryyyc.github.io</id>
+    <title>Rme</title>
+    <updated>2022-05-31T15:46:32.746Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://Ryyyc.github.io"/>
+    <link rel="self" href="https://Ryyyc.github.io/atom.xml"/>
+    <subtitle>Root down，grow upward.</subtitle>
+    <logo>https://Ryyyc.github.io/images/avatar.png</logo>
+    <icon>https://Ryyyc.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, Rme</rights>
+    <entry>
+        <title type="html"><![CDATA[pgAdmin启动时浏览器页面一直转圈圈 无法正常打开页面]]></title>
+        <id>https://Ryyyc.github.io/post/pgadmin-load-fail/</id>
+        <link href="https://Ryyyc.github.io/post/pgadmin-load-fail/">
+        </link>
+        <updated>2021-01-26T10:16:39.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>最近新安装了 postgres，同时安装了 pgAdmin 4，但是遇到了无法启动的问题。</p>
+<br>
+<h4 id="问题描述">问题描述：</h4>
+<p>打开 pgAdmin 4 ，弹出浏览器页面时一直处于转圈圈加载的页面</p>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>最近新安装了 postgres，同时安装了 pgAdmin 4，但是遇到了无法启动的问题。</p>
+<br>
+<h4 id="问题描述">问题描述：</h4>
+<p>打开 pgAdmin 4 ，弹出浏览器页面时一直处于转圈圈加载的页面</p>
+<!-- more -->
+<p>使用浏览器开发者工具检查，发现报错信息</p>
+<p><code>Refused to execute script from 'http://127.0.0.1:54943/static/vendor/require/require.min.js?ver=42800' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.</code></p>
+<p><code>Refused to execute script from 'http://127.0.0.1:54943/static/js/generated/vendor.main.js?ver=42800' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.</code></p>
+<p><code>Refused to execute script from 'http://127.0.0.1:54943/static/js/generated/vendor.others.js?ver=42800' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.</code></p>
+<p><code>Refused to execute script from 'http://127.0.0.1:54943/static/js/generated/pgadmin_commons.js?ver=42800' because its MIME type ('text/plain') is not executable, and strict MIME type checking is enabled.</code></p>
+<br>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20210126181038446.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="转圈圈" loading="lazy"></figure>
+<p><br><br><br></p>
+<h4 id="解决方案">解决方案：</h4>
+<p>从报错信息可以看出，浏览器没有将 require.min.js、vendor.main.js、vendor.others.js、pgadmin_commons.js 这几个文件解释为 JavaScript，所以无法执行这些脚本，他们的响应头里面 Content-Type 是 text/plain。可能是因为 注册表被破坏，把扩展名为 js 的文件类型注册为 ‘text/plain’</p>
+<p><br><br></p>
+<p>方法一：</p>
+<p>打开注册表： <code>计算机\HKEY_CLASSES_ROOT\.js\</code></p>
+<p>修改 <code>Content Type</code> 选项的配置，将 <strong>text/plain</strong> 修改为 <strong>text/javascript</strong> 或 <strong>application/javascript</strong></p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20210126181123370.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="修改注册表" loading="lazy"></figure>
+<p><br><br></p>
+<p>方法二：</p>
+<p>修改 <code>postgres 安装目录/pgAdmin 4/web</code> 路径下的 <code>config.py</code> 文件</p>
+<p>在文件末尾添加</p>
+<pre><code class="language-python">import mimetypes
+mimetypes.add_type('application/javascript', '.js')
+</code></pre>
+<p><br><br></p>
+<p>方法三：</p>
+<p>修改 <code>postgres 安装目录/pgAdmin 4/web</code> 路径下的 <code>config.py</code> 文件 第179行</p>
+<p>将 <strong>X_CONTENT_TYPE_OPTIONS = &quot;nosniff&quot;</strong> 修改为 <strong>X_CONTENT_TYPE_OPTIONS = &quot;&quot;</strong></p>
+<p><br><br></p>
+<p>在方法二、三中，文本编辑器没有用管理员模式运行的话，无法直接保存对 <code>config.py</code> 文件的修改，可以考虑</p>
+<ul>
+<li>先用管理员模式运行文本编辑器，然后在编辑器里面打开该文件</li>
+<li>将该文件复制到其他路径，修改后再替换回该目录</li>
+</ul>
+<p><br><br></p>
+<p>最后，在右下角托盘右击 pgAdmin 4 图标，shut down server，再重新打开 pgAdmin 4</p>
+<p><br><br></p>
+<p>我的<a href="https://ryyyc.github.io/">小站</a>、<a href="https://github.com/Ryyyc">Github</a>、<a href="https://blog.csdn.net/Ussim">CSDN</a></p>
+<br>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[通过 SSH 连接到 VMware NAT 模式下的 Ubuntu 虚拟机环境]]></title>
+        <id>https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/</id>
+        <link href="https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/">
+        </link>
+        <updated>2021-01-21T14:40:57.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>VMware <code>NAT 模式</code> 可以设置主机与虚拟机环境IP、端口的映射，虚拟环境中 SSH 使用 22 端口，只需要将宿主机设置成转发到虚拟机环境的 22 端口。</p>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>VMware <code>NAT 模式</code> 可以设置主机与虚拟机环境IP、端口的映射，虚拟环境中 SSH 使用 22 端口，只需要将宿主机设置成转发到虚拟机环境的 22 端口。</p>
+<!-- more -->
+<br>
+<p>具体步骤：</p>
+<br>
+<p>打开 <code>VMware 菜单-&gt;编辑-&gt;虚拟网络编辑器</code> ，选中 <code>VMnet8</code> ，点击下面的 <code>更改设置</code>，<code>NAT 设置</code></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20210121222938298.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="虚拟网络编辑器" loading="lazy"></figure>
+<p><br><br></p>
+<p>在 <code>NAT设置</code> 中添加 <code>端口转发</code>，主机端口 即宿主机用来连接虚拟环境的端口，虚拟机环境的 IP 地址 则是想要连接的 虚拟机环境的 IP 地址（Linux 可以通过 ifconfig 查看，Windows 可以通过 ipconfig 查看），此虚拟机环境需要开启 SSH 服务</p>
+<br>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20210121223430867.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="ifconfig" loading="lazy"></figure>
+<br>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20210121222956561.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="NAT 设置" loading="lazy"></figure>
+<p><br><br></p>
+<p>上面的设置可用通过 SSH 工具连接虚拟环境，比如 Windows 宿主机的 cmd</p>
+<pre><code class="language-bash">ssh ruan@127.0.0.1 -p 2222
+</code></pre>
+<p><br><br></p>
+<p>PS:</p>
+<br>
+<p>检查 SSH 服务是否安装且开启</p>
+<pre><code class="language-bash">ps -e | grep ssh
+</code></pre>
+<p>如果有输出 sshd 证明已经开启ssh服务</p>
+<br>
+<p>Linux 系统安装 openssh-server</p>
+<pre><code class="language-bash">sudo apt-get install openssh-server
+</code></pre>
+<p><br><br></p>
+<p>我的<a href="https://ryyyc.github.io/">小站</a>、<a href="https://github.com/Ryyyc">Github</a>、<a href="https://blog.csdn.net/Ussim">CSDN</a></p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GitHub + jsDelivr + PicGo 搭建个人图床]]></title>
+        <id>https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/</id>
+        <link href="https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/">
+        </link>
+        <updated>2021-01-21T14:39:14.000Z</updated>
+        <content type="html"><![CDATA[<br>
+<p>具体步骤：</p>
+<br>
+<h3 id="github-仓库">Github 仓库</h3>
+<p>新建一个 public 的 Github 仓库，参照 <a href="https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line">官方文档</a> 生成一个 <code>token密钥</code></p>
+<p><br><br></p>
+<h3 id="picgo">PicGo</h3>
+<p>下载 <a href="https://github.com/Molunerfinn/picgo/releases">PicGo</a> ，安装完成后打开，图床设置 选 <strong>GitHub图床</strong>，并填写相应的信息</p>
+<ul>
+<li>设定仓库名：上面新建的 Github 仓库，格式：<code>&lt;用户名&gt;/&lt;仓库名&gt;</code></li>
+<li>设定分支名：填写主分支名，比如 <code>main</code></li>
+<li>设定Token：上面生成的 <code>token密钥</code></li>
+<li>指定存储路径：指定存储在GitHub对应仓库的路径，比如 <code>img/</code></li>
+<li>设定自定义域名：图片上传后，PicGo 会按照 自定义域名+上传的图片名 的方式生成访问链接，填写 <a href="https://www.jsdelivr.com/">jsDelivr</a> 的CDN加速地址即可，格式：<code>https://cdn.jsdelivr.net/gh/&lt;用户名&gt;/&lt;仓库名&gt;</code>  (路径<code>/gh/</code>表示使用的GitHub仓库)</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20210121222455801.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<p>配置好PicGo后就可以拖动本地图片到 PicGo 上传区上传图片到 Github 仓库了</p>
+<ul>
+<li>
+<p>如果使用 <a href="https://www.typora.io/">Typora</a> 写 Markdown 博客，可以在 <code>菜单栏 -&gt; 格式 -&gt; 图像 -&gt; 全局图像设置.. -&gt; 上传服务设定</code> 中设置 PicGo 为上传服务并指定 PicGo 启动路径</p>
+</li>
+<li>
+<p>图片名最好是英文并且尽量不要包含空格等特殊字符</p>
+</li>
+<li>
+<p>使用 QQ <code>Ctrl + Alt + A</code> 截图， <code>Ctrl + V </code> 粘贴到 Typora 很便捷，可以考虑 <a href="https://ryyyc.github.io/post/QQ-screenshot-rename/">这样</a> 修改 QQ截图自动命名规则： 进入 QQ安装目录下的 <strong>I18N\2052\StringBundle.xml</strong> 文件，搜索 “QQ截图” 并替换成自定义的命名前缀</p>
+</li>
+</ul>
+<p><br><br></p>
+<p><a href="https://picgo.github.io/PicGo-Doc/zh/guide/">PicGo 官方文档</a></p>
+<br>
+<p>我的<a href="https://ryyyc.github.io/">小站</a>、<a href="https://github.com/Ryyyc">Github</a>、<a href="https://blog.csdn.net/Ussim">CSDN</a></p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[修改QQ截图自动命名规则]]></title>
+        <id>https://Ryyyc.github.io/post/QQ-screenshot-rename/</id>
+        <link href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">
+        </link>
+        <updated>2021-01-21T14:38:04.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>进入 QQ安装目录下的  <strong>I18N\2052\StringBundle.xml</strong>  文件，搜索 “QQ截图” 并替换成自定义的命名前缀</p>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>进入 QQ安装目录下的  <strong>I18N\2052\StringBundle.xml</strong>  文件，搜索 “QQ截图” 并替换成自定义的命名前缀</p>
+<!-- more -->
+<br>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/ff513fbd9f2e45f0d3dbcf9833a320cb.png" alt="img20210117175556" loading="lazy"><br>
+<br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Github 个人首页档案资料卡 README 自述文件]]></title>
+        <id>https://Ryyyc.github.io/post/github-homepage-readme/</id>
+        <link href="https://Ryyyc.github.io/post/github-homepage-readme/">
+        </link>
+        <updated>2021-01-11T15:08:21.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>最近偶然发现别人的 Github 首页长这样，觉得超级不错，于是赶紧去弄了一个，顺便记录下来。</p>
+<br>
+<p><img src="https://img-blog.csdnimg.cn/20210111223758589.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="Overview" loading="lazy"><br>
+<br></p>
+<p>现在想要丰富 Github 的首页其实很简单，只需要新建一个仓库名 和自己 Github 用户名相同的仓库并且添加一个 README.md 文件</p>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>最近偶然发现别人的 Github 首页长这样，觉得超级不错，于是赶紧去弄了一个，顺便记录下来。</p>
+<br>
+<p><img src="https://img-blog.csdnimg.cn/20210111223758589.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="Overview" loading="lazy"><br>
+<br></p>
+<p>现在想要丰富 Github 的首页其实很简单，只需要新建一个仓库名 和自己 Github 用户名相同的仓库并且添加一个 README.md 文件</p>
+<!-- more -->
+<p><br><br></p>
+<h3 id="新建仓库">新建仓库</h3>
+<p>新建与用户名同名的仓库并添加README文件<br>
+<img src="https://img-blog.csdnimg.cn/20210111224314730.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="New repository" loading="lazy"></p>
+<p><br><br></p>
+<h3 id="编辑readme">编辑README</h3>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20210111224602758.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="Edit README" loading="lazy"></figure>
+<p>编写 README 文件</p>
+<p><img src="https://img-blog.csdnimg.cn/20210111224734757.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="Edit README" loading="lazy"><br>
+<br></p>
+<p>预览</p>
+<p><img src="https://img-blog.csdnimg.cn/2021011122475553.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="Preview" loading="lazy"><br>
+<br></p>
+<p>提交</p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20210111224825808.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="Commit" loading="lazy"></figure>
+<p><br><br><br></p>
+<h3 id="readme-文件内容">README 文件内容</h3>
+<br>
+<p>添加Github统计卡</p>
+<pre><code>[![Github stats](https://github-readme-stats.vercel.app/api?username=YourUsername&amp;show_icons=true&amp;include_all_commits=true)](https://github.com/YourUsername/github-readme-stats)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=YourUsername&amp;layout=compact)](https://github.com/YourUsername/github-readme-stats)
+</code></pre>
+<br>
+<p>将仓库固定在首页</p>
+<pre><code>![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=YourUsername&amp;repo=YourRepositoryName)
+</code></pre>
+<p><br><br></p>
+<p>注意将  <strong>YourUsername</strong>  更改为自己的Github用户名，<strong>YourRepositoryName</strong> 更改为自己的仓库名</p>
+<p><br><br></p>
+<p>我的README文件</p>
+<pre><code>## Hey 👋, This is Ruan
+
+[![Mail Badge](https://img.shields.io/badge/-11812109@mail.sustech.edu.cn-c14438?style=flat&amp;logo=Gmail&amp;logoColor=white&amp;link=mailto:11812109@mail.sustech.edu.cn)](mailto:11812109@mail.sustech.edu.cn) [![Github Badge](https://img.shields.io/badge/-ryyyc-grey?style=flat&amp;logo=github&amp;logoColor=white&amp;link=https://github.com/ryyyc/)](https://www.github.com/ryyyc/)
+## Some of my Github Stats
+&lt;p align=left&gt; &lt;img src=https://komarev.com/ghpvc/?username=ryyyc alt=ryyyc /&gt; &lt;/p&gt;
+
+&lt;a href=&quot;https://github.com/ryyyc&quot;&gt;
+  &lt;img align=&quot;center&quot; alt=&quot;GitHub Stats&quot; src=&quot;https://github-readme-stats.vercel.app/api?username=ryyyc&amp;show_icons=true&amp;include_all_commits=true&quot; /&gt;
+&lt;/a&gt;
+&lt;a href=&quot;https://github.com/ryyyc&quot;&gt;
+  &lt;img align=&quot;center&quot; alt=&quot;Top Langs&quot; src=&quot;https://github-readme-stats.vercel.app/api/top-langs/?username=ryyyc&amp;layout=compact&quot; /&gt;
+&lt;/a&gt;
+
+Languages and Tools:
+
+&lt;code&gt;&lt;img height=&quot;20&quot; src=&quot;https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/java/java.png&quot; alt=&quot;java&quot;&gt;&lt;/code&gt;
+&lt;code&gt;&lt;img height=&quot;20&quot; src=&quot;https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/python/python.png&quot; alt=&quot;python&quot;&gt;&lt;/code&gt;
+&lt;code&gt;&lt;img height=&quot;20&quot; src=&quot;https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/cpp/cpp.png&quot; alt=&quot;cpp&quot;&gt;&lt;/code&gt;
+
+
+&lt;!--
+**Ryyyc/ryyyc** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+
+Here are some ideas to get you started:
+
+- 🔭 I’m currently working on ...
+- 🌱 I’m currently learning ...
+- 👯 I’m looking to collaborate on ...
+- 🤔 I’m looking for help with ...
+- 💬 Ask me about ...
+- 📫 How to reach me: ...
+- 😄 Pronouns: ...
+- ⚡ Fun fact: ...
+--&gt;
+</code></pre>
+<p><br><br></p>
+<p>更多请参考 <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a></p>
+<p><br><br></p>
+<h3 id="开启关闭-资料卡">开启/关闭 资料卡</h3>
+<p>如果希望 Github 首页开启这样的资料卡，必须保证</p>
+<ul>
+<li>有一个仓库的仓库名和自己用户名相同</li>
+<li>该仓库存在 README 文件 且 不为空</li>
+<li>该仓库是公开的</li>
+</ul>
+<p>换句话说，如果希望关闭资料卡的展示，只需要不满足以上任意条件即可</p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[解决Github无法加载或不显示图片问题]]></title>
+        <id>https://Ryyyc.github.io/post/github-image-load-fail/</id>
+        <link href="https://Ryyyc.github.io/post/github-image-load-fail/">
+        </link>
+        <updated>2021-01-09T09:13:36.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>Github无法加载或不显示图片，严重影响日常使用，可以通过修改 <em>hosts</em> 文件解决问题</p>
+<br>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>Github无法加载或不显示图片，严重影响日常使用，可以通过修改 <em>hosts</em> 文件解决问题</p>
+<br>
+<!-- more -->
+<p>hosts文件所在路径</p>
+<p>Mac              /etc/hosts<br>
+Linux           /etc/hosts<br>
+Windows    C:\Windows\System32\drivers\etc\hosts</p>
+<p><br><br></p>
+<p>在 hosts 文件末尾追加以下信息</p>
+<pre><code class="language-bash"># GitHub Start
+
+192.30.253.112 Build software better, together
+192.30.253.119 gist.github.com
+151.101.184.133 assets-cdn.github.com
+151.101.184.133 raw.githubusercontent.com
+151.101.184.133 gist.githubusercontent.com
+151.101.184.133 cloud.githubusercontent.com
+151.101.184.133 camo.githubusercontent.com
+151.101.184.133 avatars0.githubusercontent.com
+151.101.184.133 avatars1.githubusercontent.com
+151.101.184.133 avatars2.githubusercontent.com
+151.101.184.133 avatars3.githubusercontent.com
+151.101.184.133 avatars4.githubusercontent.com
+151.101.184.133 avatars5.githubusercontent.com
+151.101.184.133 avatars6.githubusercontent.com
+151.101.184.133 avatars7.githubusercontent.com
+151.101.184.133 avatars8.githubusercontent.com
+
+# GitHub End
+</code></pre>
+<p><br><br></p>
+<p>如果由于权限出现修改 hosts 文件无法保存问题，可以先把 hosts 文件复制到另一个地方，修改后替换原 hosts 文件</p>
+<p><br><br></p>
+<p>如果一段时间后该方法失效，需要去查询到最新的 github 图片服务器地址，比如 在 这里 查询 avatars0.githubusercontent.com 的 ip ， 将新查询到的 ip 替换掉旧的 ip （avatars0~8的全部替换）</p>
+<p><br><br></p>
+<p>我的<a href="https://ryyyc.github.io/">小站</a>、<a href="https://github.com/Ryyyc">Github</a>、<a href="https://blog.csdn.net/Ussim">CSDN</a></p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[windows10 下 用图片手把手教你 卸载 cygwin]]></title>
+        <id>https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/</id>
+        <link href="https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/">
+        </link>
+        <updated>2020-09-20T08:25:52.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="windows10-下-卸载-cygwin">windows10 下 卸载 cygwin</h1>
+<p><br><br></p>
+<p>进入 <a href="https://cygwin.com/install.html">官方</a>， 下载符合自己操作系统的 Cygwin 安装程序（这个程序包含了 Cygwin 的安装、更新、卸载功能）</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="windows10-下-卸载-cygwin">windows10 下 卸载 cygwin</h1>
+<p><br><br></p>
+<p>进入 <a href="https://cygwin.com/install.html">官方</a>， 下载符合自己操作系统的 Cygwin 安装程序（这个程序包含了 Cygwin 的安装、更新、卸载功能）</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200920161438817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>打开 Cygwin 安装程序，点击 <strong>下一步</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200920161451596.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>选择 第三个安装类型 <strong>Install from Local Directory</strong></p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/20200920161503251.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>此时程序会自动检测到你 Cygwin 的本地安装目录，如果没有，则手动将 <strong>Root Directory</strong> 改为 Cygwin 的本地安装目录</p>
+<p><img src="https://img-blog.csdnimg.cn/2020092016151521.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>点击 <strong>是</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200920161526647.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>点击<strong>下一步</strong></p>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200920161537233.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<p>重点来啦！</p>
+<p><strong>View</strong> 选择 <strong>Category</strong></p>
+<p><strong>Package</strong> 选择 <strong>All</strong></p>
+<p><strong>New</strong> 选择 <strong>Uninstall</strong></p>
+<p>点击 <strong>下一步</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200920161549414.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>点击 <strong>下一步</strong>，等待卸载完成</p>
+<p><img src="https://img-blog.csdnimg.cn/20200920161559426.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>卸载完成</p>
+<p><img src="https://img-blog.csdnimg.cn/20200920161609926.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br><br></p>
+<p>然后可以再把 Cygwin 安装目录下的文件手动删完</p>
+<p><br><br><br></p>
+<p>附：<a href="https://cygwin.com/faq.html#faq.setup.uninstall-all">官方文档</a></p>
+<blockquote>
+<p>2.20.How do I uninstall all of Cygwin?</p>
+<p>Setup has no automatic uninstall facility. The recommended method to remove all of Cygwin is as follows:</p>
+<p>If you have any Cygwin services running, remove by repeating the instructions in https://cygwin.com/faq/faq.html#faq.setup.uninstall-service for all services that you installed. Common services that might have been installed are sshd, cron, cygserver, inetd, apache, postgresql, and so on.</p>
+<p>Stop the X11 server if it is running, and terminate any Cygwin programs that might be running in the background. Exit the command prompt and ensure that no Cygwin processes remain. Note: If you want to save your mount points for a later reinstall, first save the output of mount -m as described at https://cygwin.com/cygwin-ug-net/mount.html.</p>
+<p>If you installed cyglsa.dll by running the shell script /usr/bin/cyglsa-config as described in https://cygwin.com/cygwin-ug-net/ntsec.html, then you need to configure Windows to stop using the LSA authentication package. You do so by editing the registry and restoring /HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Control/Lsa/Authentication Packages back to it's original value of msv1_0, and then rebooting.</p>
+<p>Delete the Cygwin root folder and all subfolders. If you get an error that an object is in use, then ensure that you've stopped all services and closed all Cygwin programs. If you get a 'Permission Denied' error then you will need to modify the permissions and/or ownership of the files or folders that are causing the error. For example, sometimes files used by system services end up owned by the SYSTEM account and not writable by regular users.</p>
+<p>The quickest way to delete the entire tree if you run into this problem is to take ownership of all files and folders to your account. To do this in Windows Explorer, right click on the root Cygwin folder, choose Properties, then the Security tab. If you are using Simple File Sharing, you will need to boot into Safe Mode to access the Security tab. Select Advanced, then go to the Owner tab and make sure your account is listed as the owner. Select the 'Replace owner on subcontainers and objects' checkbox and press Ok. After Explorer applies the changes you should be able to delete the entire tree in one operation. Note that you can also achieve by using other tools such as icacls.exe or directly from Cygwin by using chown. Please note that you shouldn't use the recursive form of chown on directories that have other file systems mounted under them (specifically you must avoid /proc) since you'd change ownership of the files under those mount points as well.</p>
+<p>Delete the Cygwin shortcuts on the Desktop and Start Menu, and anything left by setup-x86{_64}.exe in the download directory. However, if you plan to reinstall Cygwin it's a good idea to keep your setup-x86{_64}.exe download directory since you can reinstall the packages left in its cache without redownloading them.</p>
+<p>If you added Cygwin to your system path, you should remove it unless you plan to reinstall Cygwin to the same location. Similarly, if you set your CYGWIN environment variable system-wide and don't plan to reinstall, you should remove it.</p>
+<p>Finally, if you want to be thorough you can delete the registry tree Software\Cygwin under HKEY_LOCAL_MACHINE and/or HKEY_CURRENT_USER. However, if you followed the directions above you will have already removed everything important. Typically only the installation directory has been stored in the registry at all.</p>
+</blockquote>
+<p><br><br></p>
+<p>我的<a href="https://iseed.ml/">小站</a>、<a href="https://github.com/Ryyyc">Github</a>、<a href="https://blog.csdn.net/Ussim">CSDN</a></p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[python: Failed calling sys.__interactivehook__ (Windows)]]></title>
+        <id>https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/</id>
+        <link href="https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/">
+        </link>
+        <updated>2020-09-20T08:23:02.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>解决办法：将 <strong>C:\Users{username}</strong> 目录下的 <strong>.python_history</strong> 文件里面的<strong>中文</strong>删除</p>
+<br>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>解决办法：将 <strong>C:\Users{username}</strong> 目录下的 <strong>.python_history</strong> 文件里面的<strong>中文</strong>删除</p>
+<br>
+<!-- more -->
+<br>
+<p>进入 python 解释器 时出现 Failed calling sys.__interactivehook__ 错误</p>
+<pre><code>Microsoft Windows [版本 10.0.19042.508]
+(c) 2020 Microsoft Corporation. 保留所有权利。
+
+C:\Users\14298&gt;python
+Python 3.8.3 (default, Jul  2 2020, 17:30:36) [MSC v.1916 64 bit (AMD64)] :: Anaconda, Inc. on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+Failed calling sys.__interactivehook__
+Traceback (most recent call last):
+  File &quot;D:\software\Environment\Anaconda3\lib\site.py&quot;, line 440, in register_readline
+    readline.read_history_file(history)
+  File &quot;D:\software\Environment\Anaconda3\lib\site-packages\pyreadline\rlmain.py&quot;, line 165, in read_history_file
+    self.mode._history.read_history_file(filename)
+  File &quot;D:\software\Environment\Anaconda3\lib\site-packages\pyreadline\lineeditor\history.py&quot;, line 82, in read_history_file
+    for line in open(filename, 'r'):
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xaf in position 536: illegal multibyte sequence
+&gt;&gt;&gt;
+</code></pre>
+<p><br><br></p>
+<p>问题来源：读取某个文件，其中包含了无法解析的编码（BGK，中文）</p>
+<p><br><br></p>
+<p>解决办法：将 <strong>C:\Users{username}</strong> 目录下的 <strong>.python_history</strong> 文件里面的<strong>中文</strong>删除</p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 下 修改temp目录路径]]></title>
+        <id>https://Ryyyc.github.io/post/Windows-Tmp-Path/</id>
+        <link href="https://Ryyyc.github.io/post/Windows-Tmp-Path/">
+        </link>
+        <updated>2020-09-20T08:22:23.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>修改环境变量，<strong>用户变量</strong> 和 <strong>系统变量</strong> 的 变量 <strong>TEMP</strong>、<strong>TMP</strong> 的值改成新的路径即可</p>
+<br>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>修改环境变量，<strong>用户变量</strong> 和 <strong>系统变量</strong> 的 变量 <strong>TEMP</strong>、<strong>TMP</strong> 的值改成新的路径即可</p>
+<br>
+<!-- more -->
+<p><img src="https://img-blog.csdnimg.cn/20200915212617234.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>可以先去系统盘C盘把Temp目录清空，又可以释放一波C盘空间了</p>
+<p>一般位于<br>
+C:\Users{uername}\AppData\Local\Temp<br>
+C:\Windows\Temp</p>
+<p><br><br></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows下 更改 pip默认缓存目录]]></title>
+        <id>https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/</id>
+        <link href="https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/">
+        </link>
+        <updated>2020-09-20T08:21:10.000Z</updated>
+        <summary type="html"><![CDATA[<br>
+<p>windows下，pip的默认缓存目录为：&quot;<strong>C:\Users{username}\AppData\Local\pip\cache</strong>&quot;</p>
+<br>
+可以使用以下命令修改缓存目录
+<pre><code class="language-bash">pip config set global.cache-dir &quot;D:\\Data\\Temp\\pip\\cache&quot;
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<br>
+<p>windows下，pip的默认缓存目录为：&quot;<strong>C:\Users{username}\AppData\Local\pip\cache</strong>&quot;</p>
+<br>
+可以使用以下命令修改缓存目录
+<pre><code class="language-bash">pip config set global.cache-dir &quot;D:\\Data\\Temp\\pip\\cache&quot;
+</code></pre>
+<!-- more -->
+<br>
+<p>其中双引号里面即为自己新建的目录。<br>
+此时会在 <strong>&quot;C:\Users{username}\AppData\Roaming\pip&quot;</strong> 下生成<strong>pip.ini</strong>文件。</p>
+<br>
+<p>pip的默认缓存目录就改到了新建目录下了。</p>
+<br>
+<pre><code class="language-bash">Microsoft Windows [版本 10.0.19042.508]
+(c) 2020 Microsoft Corporation. 保留所有权利。
+
+C:\Users\14298&gt;pip config set global.cache-dir &quot;D:\\Data\\Temp\\pip\\cache&quot;
+Writing to C:\Users\14298\AppData\Roaming\pip\pip.ini
+</code></pre>
+<br>]]></content>
+    </entry>
+</feed>

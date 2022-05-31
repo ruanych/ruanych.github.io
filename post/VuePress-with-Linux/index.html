@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Linux 下 VuePress 的安装使用 | Rme</title>
+<meta name="description" content="Root down，grow upward.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://Ryyyc.github.io/favicon.ico?v=1654011978957">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Ryyyc.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://Ryyyc.github.io">Rme</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>Linux 下 VuePress 的安装使用</h1>
+            <p class="article-meta">
+              2020-08-06
+              
+                <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge secondary">
+                  Linux
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <h1 id="vuepress的安装使用">VuePress的安装使用</h1>
+<p><a href="https://www.vuepress.cn/">VuePress</a> 是一个基于 <a href="https://cn.vuejs.org/">Vue</a> 的轻量级静态网站生成器，以及为编写技术文档而优化的默认主题。</p>
+<br>
+<!-- more -->
+<p>VuePress 要求 Node.js 环境，且 Node.js 版本 &gt;= 8.6。<br>
+<br><br></p>
+<h2 id="环境搭建">环境搭建</h2>
+<h4 id="安装-nodejs">安装 Node.js</h4>
+<p>从 <a href="http://nodejs.cn/download/">官方网站</a> 获取最新版本安装包下载链接</p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20200806172149123.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<pre><code class="language-bash"># 创建安装目录
+sudo mkdir /usr/local/lib/nodejs
+
+# 进入安装目录
+cd /usr/local/lib/nodejs
+
+# 下载安装包
+wget  https://npm.taobao.org/mirrors/node/v14.7.0/node-v14.7.0-linux-x64.tar.xz
+
+# 解压
+sudo tar -xJvf node-v14.7.0-linux-x64.tar.xz
+</code></pre>
+<br>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdnimg.cn/2020080617214925.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<br>
+<h4 id="配置环境变量">配置环境变量</h4>
+<pre><code class="language-bash"># 编辑环境变量文件，在末尾追加 Node.js 路径
+echo export PATH=/usr/local/lib/nodejs/node-v14.7.0-linux-x64/bin:$PATH &gt;&gt;~/.bash_profile
+
+# 重载该文件使设置生效
+source ~/.bash_profile
+
+# 查看版本信息
+node -v
+npm version
+npx -v
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://img-blog.csdnimg.cn/20200806172149104.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<h2 id="安装-vuepress">安装 VuePress</h2>
+<pre><code class="language-bash"># 使⽤淘宝镜像
+npm config set registry https://registry.npm.taobao.org
+# 安装 VuePress
+npm install -g vuepress
+</code></pre>
+<br>
+<figure data-type="image" tabindex="4"><img src="https://img-blog.csdnimg.cn/20200806172149163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<pre><code class="language-bash"># 在 root 目录下创建并进入my_blogs目录
+mkdir ~/my_blogs
+cd ~/my_blogs
+
+# 项目初始化 
+npm init -y
+</code></pre>
+<br>
+<figure data-type="image" tabindex="5"><img src="https://img-blog.csdnimg.cn/202008061721491.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<h2 id="配置-vuepress">配置 VuePress</h2>
+<pre><code class="language-bash"># 设置 package.json 的脚本配置 (推荐使用 FinalShell等工具直接编辑)
+vim package.json
+# 修改scripts中的内容如下
+</code></pre>
+<pre><code class="language-json"> &quot;scripts&quot;: {
+ &quot;docs:dev&quot;: &quot;vuepress dev docs&quot;,
+ &quot;docs:build&quot;: &quot;vuepress build docs&quot;
+ },
+</code></pre>
+<br>
+修改前
+<figure data-type="image" tabindex="6"><img src="https://img-blog.csdnimg.cn/20200806172148960.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+修改后
+<figure data-type="image" tabindex="7"><img src="https://img-blog.csdnimg.cn/2020080617214961.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<pre><code class="language-bash"># 创建文档目录以及 .vuepress ⽬录
+mkdir ~/my_blogs/docs ~/my_blogs/docs/.vuepress
+
+# 在 docs 目录下新建⼀个md⽂件 
+echo '# Hello VuePress - ﬁrst blog!' &gt; ~/my_blogs/docs/README.md 
+
+# 在 .vuepress 目录下创建 conﬁg.js 配置⽂件 
+cd ~/my_blogs/docs/.vuepress 
+echo &gt;conﬁg.js 
+
+# 在 .vuepress 目录下创建 public ⽬录 
+mkdir ~/my_blogs/docs/.vuepress/public  
+</code></pre>
+<br>
+<figure data-type="image" tabindex="8"><img src="https://img-blog.csdnimg.cn/2020080617214994.png" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>在 my_blogs 路径下查看目录</p>
+<pre><code class="language-bash">tree -a
+
+# 如果没有安装 tree
+# centos 系统下使用
+sudo yum install tree
+# Ubuntu 系统下使用
+sudo apt-get -y install tree
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://img-blog.csdnimg.cn/20200806172148950.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>修改首页配置</p>
+<p>编辑 <strong>/root/my_blogs/docs</strong> 目录下的 <strong>README.md</strong> 文件</p>
+<pre><code class="language-markdown">---
+home: true
+heroText: Vue技术博客初试
+tagline: 项目结构，关注讨论，每日分享
+actionText: 每日更新 →
+actionLink: /testlink/
+features:
+- title: 项目结构
+	- details: 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。
+- title: 关注讨论
+	- details: 享受 Vue + webpack 的开发体验，在 Markdown 中使用 Vue 组件，同时可以使用Vue 来开发自定义主题。
+- title: 每日分享
+	- details: VuePress 为每个页面预渲染生成静态的 HTML，同时在页面被加载的时候，将作为 SPA 运行。
+footer: LearnVueonECS Licensed | Copyright © 2020-present
+---
+</code></pre>
+<p><br><br></p>
+<h2 id="启动-vuepress">启动 VuePress</h2>
+<pre><code class="language-bash">vuepress dev ~/my_blogs/docs
+</code></pre>
+<p><img src="https://img-blog.csdnimg.cn/20200806172149110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"><br>
+<br></p>
+<p>访问网站 <strong>http://&lt;你的公网IP地址&gt;:8080/</strong></p>
+<pre><code class="language-bash">vuepress dev ~/my_blogs/docs
+</code></pre>
+<br>
+<figure data-type="image" tabindex="10"><img src="https://img-blog.csdnimg.cn/20200806172149217.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<br>
+<p>至此，VuePress搭建完毕。</p>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://Ryyyc.github.io/post/install-redis-on-Linux/">
+                <h3 class="post-title">
+                  Linux 下 Redis 的安装使用
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+          
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
+
+          
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://Ryyyc.github.io/images/avatar.png?v=1654011978957" class="no-responsive avatar">
+    <div class="text-muted">Root down，grow upward.</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/pgadmin-load-fail/">pgAdmin启动时浏览器页面一直转圈圈 无法正常打开页面</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/">通过 SSH 连接到 VMware NAT 模式下的 Ubuntu 虚拟机环境</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/">GitHub + jsDelivr + PicGo 搭建个人图床</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">修改QQ截图自动命名规则</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-homepage-readme/">Github 个人首页档案资料卡 README 自述文件</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-image-load-fail/">解决Github无法加载或不显示图片问题</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/">windows10 下 用图片手把手教你 卸载 cygwin</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/">python: Failed calling sys.__interactivehook__ (Windows)</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Tmp-Path/">Windows 下 修改temp目录路径</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/">Windows下 更改 pip默认缓存目录</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://Ryyyc.github.io/tag/UYAaNgx99/" class="badge secondary">
+          Windows
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/bYsFXBbd3/" class="badge secondary">
+          Ubuntu
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/q5U9ddBvN/" class="badge secondary">
+          GitHub
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/IlH1S4cd3/" class="badge success">
+          Python
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/T5_OZKfBOv/" class="badge ">
+          ELK
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge secondary">
+          Linux
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/UU6G47RMx/" class="badge success">
+          Anaconda3
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/eCf4SJbE3y/" class="badge warning">
+          OpenCV
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/5R72tT28g/" class="badge warning">
+          CSDN
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/NjCIr2uZ-/" class="badge secondary">
+          Git
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2020-2022  <a href="https://github.com/Ryyyc" target="_blank">Ryyyc</a> <a> </a> <a href="https://beian.miit.gov.cn">桂ICP备2022003830号</a>
+    </div> | <a class="rss" href="https://Ryyyc.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c32058622fcbec922dcf',
+        clientSecret: 'ff7ece0b2576488eab76c7cf43717b1aacb0bb8f',
+        repo: 'Ryyyc.github.io',
+        owner: 'Ryyyc',
+        admin: ['Ryyyc'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

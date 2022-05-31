@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>GitHub + jsDelivr + PicGo 搭建个人图床 | Rme</title>
+<meta name="description" content="Root down，grow upward.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://Ryyyc.github.io/favicon.ico?v=1654011978957">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://Ryyyc.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+  </head>
+  <body>
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://Ryyyc.github.io">Rme</a></h3>
+  </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
+            
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>GitHub + jsDelivr + PicGo 搭建个人图床</h1>
+            <p class="article-meta">
+              2021-01-21
+              
+                <a href="https://Ryyyc.github.io/tag/q5U9ddBvN/" class="badge warning">
+                  GitHub
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <br>
+<p>具体步骤：</p>
+<br>
+<h3 id="github-仓库">Github 仓库</h3>
+<p>新建一个 public 的 Github 仓库，参照 <a href="https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line">官方文档</a> 生成一个 <code>token密钥</code></p>
+<p><br><br></p>
+<h3 id="picgo">PicGo</h3>
+<p>下载 <a href="https://github.com/Molunerfinn/picgo/releases">PicGo</a> ，安装完成后打开，图床设置 选 <strong>GitHub图床</strong>，并填写相应的信息</p>
+<ul>
+<li>设定仓库名：上面新建的 Github 仓库，格式：<code>&lt;用户名&gt;/&lt;仓库名&gt;</code></li>
+<li>设定分支名：填写主分支名，比如 <code>main</code></li>
+<li>设定Token：上面生成的 <code>token密钥</code></li>
+<li>指定存储路径：指定存储在GitHub对应仓库的路径，比如 <code>img/</code></li>
+<li>设定自定义域名：图片上传后，PicGo 会按照 自定义域名+上传的图片名 的方式生成访问链接，填写 <a href="https://www.jsdelivr.com/">jsDelivr</a> 的CDN加速地址即可，格式：<code>https://cdn.jsdelivr.net/gh/&lt;用户名&gt;/&lt;仓库名&gt;</code>  (路径<code>/gh/</code>表示使用的GitHub仓库)</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20210121222455801.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1Vzc2lt,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" loading="lazy"></figure>
+<p><br><br></p>
+<p>配置好PicGo后就可以拖动本地图片到 PicGo 上传区上传图片到 Github 仓库了</p>
+<ul>
+<li>
+<p>如果使用 <a href="https://www.typora.io/">Typora</a> 写 Markdown 博客，可以在 <code>菜单栏 -&gt; 格式 -&gt; 图像 -&gt; 全局图像设置.. -&gt; 上传服务设定</code> 中设置 PicGo 为上传服务并指定 PicGo 启动路径</p>
+</li>
+<li>
+<p>图片名最好是英文并且尽量不要包含空格等特殊字符</p>
+</li>
+<li>
+<p>使用 QQ <code>Ctrl + Alt + A</code> 截图， <code>Ctrl + V </code> 粘贴到 Typora 很便捷，可以考虑 <a href="https://ryyyc.github.io/post/QQ-screenshot-rename/">这样</a> 修改 QQ截图自动命名规则： 进入 QQ安装目录下的 <strong>I18N\2052\StringBundle.xml</strong> 文件，搜索 “QQ截图” 并替换成自定义的命名前缀</p>
+</li>
+</ul>
+<p><br><br></p>
+<p><a href="https://picgo.github.io/PicGo-Doc/zh/guide/">PicGo 官方文档</a></p>
+<br>
+<p>我的<a href="https://ryyyc.github.io/">小站</a>、<a href="https://github.com/Ryyyc">Github</a>、<a href="https://blog.csdn.net/Ussim">CSDN</a></p>
+<p><br><br></p>
+
+            </div>
+          </article>
+        </div>
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">
+                <h3 class="post-title">
+                  修改QQ截图自动命名规则
+                </h3>
+              </a>
+            </div>
+          
+        </div>
+        
+          
+            <div class="paper" data-aos="fade-in">
+              <div id="gitalk-container"></div>
+            </div>
+          
+
+          
+        
+      </div>
+
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://Ryyyc.github.io/images/avatar.png?v=1654011978957" class="no-responsive avatar">
+    <div class="text-muted">Root down，grow upward.</div>
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/pgadmin-load-fail/">pgAdmin启动时浏览器页面一直转圈圈 无法正常打开页面</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/SSH-VMware-NAT-Ubuntu/">通过 SSH 连接到 VMware NAT 模式下的 Ubuntu 虚拟机环境</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-jsdelivr-picgo-image-hosting/">GitHub + jsDelivr + PicGo 搭建个人图床</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/QQ-screenshot-rename/">修改QQ截图自动命名规则</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-homepage-readme/">Github 个人首页档案资料卡 README 自述文件</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/github-image-load-fail/">解决Github无法加载或不显示图片问题</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows10-Uninstall-Cygwin/">windows10 下 用图片手把手教你 卸载 cygwin</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Python-failed-calling-sys__interactivehook__/">python: Failed calling sys.__interactivehook__ (Windows)</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Tmp-Path/">Windows 下 修改temp目录路径</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://Ryyyc.github.io/post/Windows-Pip-Cache-Directory/">Windows下 更改 pip默认缓存目录</a>
+            </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://Ryyyc.github.io/tag/UYAaNgx99/" class="badge secondary">
+          Windows
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/bYsFXBbd3/" class="badge success">
+          Ubuntu
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/q5U9ddBvN/" class="badge ">
+          GitHub
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/IlH1S4cd3/" class="badge ">
+          Python
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/T5_OZKfBOv/" class="badge warning">
+          ELK
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/yvVyZX0K9p/" class="badge secondary">
+          Linux
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/UU6G47RMx/" class="badge ">
+          Anaconda3
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/eCf4SJbE3y/" class="badge ">
+          OpenCV
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/5R72tT28g/" class="badge warning">
+          CSDN
+        </a>
+      
+        <a href="https://Ryyyc.github.io/tag/NjCIr2uZ-/" class="badge secondary">
+          Git
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="copyright">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2020-2022  <a href="https://github.com/Ryyyc" target="_blank">Ryyyc</a> <a> </a> <a href="https://beian.miit.gov.cn">桂ICP备2022003830号</a>
+    </div> | <a class="rss" href="https://Ryyyc.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
+</div>
+
+
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: 'c32058622fcbec922dcf',
+        clientSecret: 'ff7ece0b2576488eab76c7cf43717b1aacb0bb8f',
+        repo: 'Ryyyc.github.io',
+        owner: 'Ryyyc',
+        admin: ['Ryyyc'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
